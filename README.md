@@ -17,4 +17,4 @@ Settings will be applied by pressing 'SAVE CONFIGURATION'.
 WARNING! If you put any letters in the 'Check interval' box, the app will crash and not start again until you change the number in the config. Be careful.
 
 ### This is a BETA release. Expect bugs!
-And a shitty source code. This was a private project and I'm a total noob in C#. Please be nice.
+And a shitty source code written in 3h. This was a private project and I'm a total noob in C#. Please be nice.
