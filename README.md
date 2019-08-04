@@ -8,7 +8,7 @@ Download the software from the 'Releases'. Extract the zip file to any folder yo
 WARNING! If you move the installation folder, you need to create the text layer again!
 
 ### Usage
-Open the software and start Spotify. You can minimize the software in the tray by pressing the minimize button of the window.
+Open the software and start Spotify. You can minimize the software in the tray by pressing the minimize button of the window. You can get it back by double-clicking the Tray icon.
 
 ![Screenshot](https://i.ibb.co/vj0QprG/osdscreenshot.png)
 
