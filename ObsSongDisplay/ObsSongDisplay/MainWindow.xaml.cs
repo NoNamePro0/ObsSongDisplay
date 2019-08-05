@@ -18,6 +18,7 @@ using MahApps.Metro.Controls;
 using System.Media;
 using System.Diagnostics;
 using System.IO;
+using MahApps.Metro;
 
 namespace ObsSongDisplay
 {
@@ -89,9 +90,9 @@ namespace ObsSongDisplay
             if (this.WindowState == WindowState.Minimized)
             {
                 this.ShowInTaskbar = false;
-                notifyIcon.BalloonTipTitle = "Minimize Sucessful";
-                notifyIcon.BalloonTipText = "Minimized the app ";
-                notifyIcon.ShowBalloonTip(400);
+                notifyIcon.BalloonTipTitle = "Minimized!";
+                notifyIcon.BalloonTipText = "Double-click the Tray icon to get the UI back.";
+                notifyIcon.ShowBalloonTip(1000);
                 notifyIcon.Visible = true;
             }
             else if (this.WindowState == WindowState.Normal)
@@ -161,7 +162,7 @@ namespace ObsSongDisplay
                         File.WriteAllText("osd.txt", String.Empty);
                         using (StreamWriter outputFile = new StreamWriter("osd.txt"))
                         {
-                            outputFile.Write(parseSpotify(proc.MainWindowTitle));
+                            outputFile.WriteLine(parseSpotify(proc.MainWindowTitle));
                         }
                     }
                 }
@@ -186,6 +187,35 @@ namespace ObsSongDisplay
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             checkThread();
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (checkBox.IsChecked == true)
+            {
+                ThemeManager.ChangeAppStyle(this,
+                                    ThemeManager.GetAccent("Olive"),
+                                    ThemeManager.GetAppTheme("BaseDark"));
+            }
+            else
+            {
+                ThemeManager.ChangeAppStyle(this,
+                                    ThemeManager.GetAccent("Blue"),
+                                    ThemeManager.GetAppTheme("BaseLight"));
+            }
+            
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(this,
+                                    ThemeManager.GetAccent("Blue"),
+                                    ThemeManager.GetAppTheme("BaseLight"));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://steamcommunity.com/tradeoffer/new/?partner=255140219&token=DF94BUQs");
         }
     }
 }
