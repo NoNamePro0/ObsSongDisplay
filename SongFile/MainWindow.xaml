@@ -6,8 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ObsSongDisplay"
         mc:Ignorable="d"
-        Title="SongFile" Height="300.867" Width="327.617" ResizeMode="CanMinimize" Initialized="MetroWindow_Initialized" Closing="MetroWindow_Closing" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded">
-    <Grid Height="272" VerticalAlignment="Top">
+        Title="SongFile" Height="321.867" Width="327.617" ResizeMode="CanMinimize" Initialized="MetroWindow_Initialized" Closing="MetroWindow_Closing" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded">
+    <Grid Margin="0,0,0,5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="55*"/>
             <ColumnDefinition Width="25*"/>
@@ -24,6 +24,7 @@
         <Button x:Name="save_button" Content="Save configuration" HorizontalAlignment="Left" Margin="21,148,0,0" VerticalAlignment="Top" Width="283" Click="Save_button_Click" Grid.ColumnSpan="3"/>
         <TextBox x:Name="intervalBox" HorizontalAlignment="Left" Height="23" Margin="26.932,113,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.5,0.5" Grid.Column="2"/>
         <Label x:Name="label2_Copy" Content="Interval (Sec):" HorizontalAlignment="Left" Margin="21,113,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+        <Button x:Name="btnRefresh" Content="Refresh" Grid.Column="2" HorizontalAlignment="Left" Margin="157,257,0,0" VerticalAlignment="Top" Width="75" Click="btnRefresh_Click"/>
 
     </Grid>
 </Controls:MetroWindow>

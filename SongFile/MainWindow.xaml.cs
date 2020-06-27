@@ -108,7 +108,7 @@ namespace ObsSongDisplay
             written = Get(0, written); // Spotify
             written = Get(1, written); // VLC
 
-
+            
             this.Dispatcher.Invoke(() =>
             {
                 if (String.IsNullOrEmpty(song.Text))
@@ -283,6 +283,11 @@ namespace ObsSongDisplay
         {
             Settings();
             Timer();
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            Refresh(null, null);    
         }
     }
 }
