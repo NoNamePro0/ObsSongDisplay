@@ -101,7 +101,7 @@ namespace ObsSongDisplay
             t.Start();
         }
 
-        public void Refresh(object sender, ElapsedEventArgs e)
+        public void Refresh(object sender = null, ElapsedEventArgs e = null)
         {
             bool written = false;
 
@@ -284,11 +284,13 @@ namespace ObsSongDisplay
         {
             Settings();
             Timer();
+            Refresh();
+
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            Refresh(null, null);    
+            Refresh();    
         }
     }
 }
