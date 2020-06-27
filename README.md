@@ -1,20 +1,33 @@
 # ObsSongDisplay
-A software to shows the name and author of the current song in OBS/XSplit. Currently for Spotify only!
 
-## How to?
-### Installation
-Download the software from the 'Releases'. Extract the zip file to any folder you want. Now open OBS/XSplit and create a new Text Layer (for OBS: "Text (GDI+)") that is reading its text from a file. Select the osd.txt from the folder you extracted the zip file in. That's it.
+## Features
+![Screenshot](https://i.imgur.com/tIWQUox.png)
 
-WARNING! If you move the installation folder, you need to create the text layer again!
+### Supported Music Software
+- Spotify
+- VLC
+- [and more..](https://github.com/NoNamePro0/ObsSongDisplay/issues)
 
-### Usage
-Open the software and start Spotify. You can minimize the software in the tray by pressing the minimize button of the window. You can get it back by double-clicking the Tray icon.
+## Install & Usage
 
-![Screenshot](https://i.ibb.co/vj0QprG/osdscreenshot.png)
+- Download the software from the 'Releases'.
+- Extract the zip file to any folder you want.
+- Now open OBS/XSplit
+  - Create a new Text Layer (for OBS: "Text (GDI+)") that is reading its text from a file.
+  - Select the `output.txt` from the folder you extracted the zip file in.
+- Open the tool and start your Music Software.
 
-Settings will be applied by pressing 'SAVE CONFIGURATION'.
+- Have fun! ✨
 
-WARNING! If you put any letters in the 'Check interval' box, the app will crash and not start again until you change the number in the config. Be careful.
+## Nice to know
 
-### This is a BETA release. Expect bugs!
-And a shitty source code written in 3h. This was a private project and I'm a total noob in C#. Please be nice.
+- You can minimize the Tool in the tray by pressing the minimize button of the window. You can get it back by double-clicking the Tray icon.
+- The music application must be open and can't run in background/tray.
+
+- Settings will be applied by pressing 'SAVE CONFIGURATION'
+
+> WARNING! If you move the installation folder, you need to create the OBS text layer again!
+
+> WARNING! If you put any letters in the 'Check interval' box, the app will crash and not start again until you change the number in the config. Be careful.
+
+> This is a BETA release. Expect [bugs](https://github.com/NoNamePro0/ObsSongDisplay/labels/bug)! And please report them
