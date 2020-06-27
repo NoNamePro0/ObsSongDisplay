@@ -112,7 +112,7 @@ namespace ObsSongDisplay
             
             this.Dispatcher.Invoke(() =>
             {
-                if (String.IsNullOrEmpty(song.Text))
+                if (!written)
                 {
                     File.WriteAllText(output, String.Empty);
                     using (StreamWriter outputFile = new StreamWriter(output))
@@ -285,7 +285,6 @@ namespace ObsSongDisplay
             Settings();
             Timer();
             Refresh();
-
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
