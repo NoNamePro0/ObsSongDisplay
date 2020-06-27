@@ -6,6 +6,7 @@ using MahApps.Metro.Controls;
 using System.Diagnostics;
 using System.IO;
 using System.Timers;
+using System.Text;
 
 namespace ObsSongDisplay
 {
@@ -49,6 +50,14 @@ namespace ObsSongDisplay
 
         public void Settings()
         {
+            if (!File.Exists(config))
+            {
+                StringBuilder DefaultConfig = new StringBuilder();
+                DefaultConfig.Append("%author - %name");
+                DefaultConfig.Append("20");
+                File.WriteAllText(config, DefaultConfig.ToString());
+            }
+
             pattern = File.ReadAllLines(config)[0];
             interval = File.ReadAllLines(config)[1];
 
