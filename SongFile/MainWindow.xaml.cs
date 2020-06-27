@@ -25,7 +25,7 @@ namespace ObsSongDisplay
             InitializeComponent();
 
             notifyIcon = new System.Windows.Forms.NotifyIcon();
-            notifyIcon.Icon = new System.Drawing.Icon(@"../../Resources/osdicon.ico");
+            notifyIcon.Icon = new System.Drawing.Icon(@"Resources/osdicon.ico");
             notifyIcon.MouseDoubleClick +=
                 new System.Windows.Forms.MouseEventHandler
                     (notifyIcon_MouseDoubleClick);
@@ -34,7 +34,7 @@ namespace ObsSongDisplay
         private void notifyIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             this.WindowState = WindowState.Normal;
-        }
+        }   
 
         private void Save_button_Click(object sender, RoutedEventArgs e)
         {
@@ -250,6 +250,9 @@ namespace ObsSongDisplay
                     String nameSpotify = aSpotify[1];
                     String authorSpotify = aSpotify[0];
 
+                    authorSpotify = authorSpotify.TrimEnd(' ');
+                    nameSpotify = nameSpotify.TrimStart(' ');
+
                     String rSpotify = pattern.Replace("%author", authorSpotify)
                                              .Replace("%name", nameSpotify);
                     return rSpotify;
@@ -258,6 +261,9 @@ namespace ObsSongDisplay
 
                     String nameVLC = aVLC[1].Replace("VLC media player", "");
                     String authorVLC = aVLC[0].Replace("VLC media player", "");
+
+                    authorVLC = authorVLC.TrimEnd(' ');
+                    nameVLC = nameVLC.TrimStart(' ');
 
                     String rVLC = pattern.Replace("%author", authorVLC)
                                          .Replace("%name", nameVLC);
