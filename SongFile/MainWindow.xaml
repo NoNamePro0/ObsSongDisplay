@@ -17,7 +17,7 @@
             <TextBlock x:Name="song" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Please wait.. Initialising.." VerticalAlignment="Top" Width="292" Height="26"/>
         </GroupBox>
 
-        <Label x:Name="label" Content="SongFile V1.0 Preview 1" HorizontalAlignment="Left" Margin="10,1,0,0" VerticalAlignment="Top" Height="44" Width="302" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.ColumnSpan="3"/>
+        <Label x:Name="label" Content="SongFile V1.0 Preview 2" HorizontalAlignment="Left" Margin="10,1,0,0" VerticalAlignment="Top" Height="44" Width="302" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.ColumnSpan="3"/>
         <GroupBox x:Name="groupBox1" Header="Configuration" HorizontalAlignment="Left" Height="138" Margin="10,45,0,0" VerticalAlignment="Top" Width="302" Grid.ColumnSpan="3"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="21,82,0,0" TextWrapping="Wrap" Text="%author - %name" VerticalAlignment="Top" Width="228" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Label x:Name="label2" Content="Pattern:" HorizontalAlignment="Left" Margin="21,80,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
