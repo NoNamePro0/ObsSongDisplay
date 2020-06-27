@@ -97,91 +97,132 @@ namespace ObsSongDisplay
 
             // Prionty
             written = Get(0, written); // Spotify
+            written = Get(1, written); // VLC
+
+
+            this.Dispatcher.Invoke(() =>
+            {
+                if (String.IsNullOrEmpty(song.Text))
+                {
+                    File.WriteAllText(output, String.Empty);
+                    using (StreamWriter outputFile = new StreamWriter(output))
+                    {
+                        outputFile.WriteLine("Nothing playing");
+                        song.Text = "Nothing playing";
+                    }
+                }
+            });
         }
 
         private bool Get(int plattform, bool written)
         {
-            if(!written)
+            if (!written)
             {
-                switch(plattform)
+                switch (plattform)
                 {
                     case 0: // Spotify
-                        var proc = Process.GetProcessesByName("Spotify").FirstOrDefault(p => !string.IsNullOrWhiteSpace(p.MainWindowTitle));
+                        var procSpotify = Process.GetProcessesByName("Spotify").FirstOrDefault(p => !string.IsNullOrWhiteSpace(p.MainWindowTitle));
 
-                        // Not open
-                        if (proc == null)
+                        if (!(procSpotify == null))
                         {
-                            File.WriteAllText(output, String.Empty);
-                            using (StreamWriter outputFile = new StreamWriter(output))
+                            // Playback paused!
+                            if (string.Equals(procSpotify.MainWindowTitle, "Spotify", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                outputFile.Write("Nothing playing!");
-
-                                this.Dispatcher.Invoke(() =>
+                                File.WriteAllText(output, String.Empty);
+                                using (StreamWriter outputFile = new StreamWriter(output))
                                 {
-                                    song.Text = "Nothing playing!";
-                                });
+                                    outputFile.Write("Playback paused!");
+                                    this.Dispatcher.Invoke(() =>
+                                    {
+                                        song.Text = "Playback paused!";
+                                    });
+                                    written = true;
+                                }
+                            }
 
+                            // Waiting for playback...
+                            if (string.Equals(procSpotify.MainWindowTitle, "Advertisement", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                File.WriteAllText(output, String.Empty);
+                                using (StreamWriter outputFile = new StreamWriter(output))
+                                {
+                                    outputFile.Write("Waiting for playback...");
+                                    this.Dispatcher.Invoke(() =>
+                                    {
+                                        song.Text = "Waiting for playback...";
+                                    });
+                                    written = true;
+                                }
+                            }
+
+                            // Playback paused!
+                            if (string.Equals(procSpotify.MainWindowTitle, "Spotify Free", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                File.WriteAllText(output, String.Empty);
+                                using (StreamWriter outputFile = new StreamWriter(output))
+                                {
+                                    outputFile.Write("Playback paused!");
+
+                                    this.Dispatcher.Invoke(() =>
+                                    {
+                                        song.Text = "Playback paused!";
+                                    });
+
+                                    written = true;
+                                }
+                            }
+
+                            // Song playing!
+                            if (!written)
+                            {
+                                File.WriteAllText(output, String.Empty);
+                                using (StreamWriter outputFile = new StreamWriter(output))
+                                {
+                                    outputFile.WriteLine(Parse(0, procSpotify.MainWindowTitle));
+                                    this.Dispatcher.Invoke(() =>
+                                    {
+                                        song.Text = Parse(0, procSpotify.MainWindowTitle);
+                                    });
+                                }
                                 written = true;
                             }
                         }
+                        break;
+                    case 1: // VLC Media Player
+                        var procVLC = Process.GetProcessesByName("VLC").FirstOrDefault(p => !string.IsNullOrWhiteSpace(p.MainWindowTitle));
 
-                        // Playback paused!
-                        if (string.Equals(proc.MainWindowTitle, "Spotify", StringComparison.InvariantCultureIgnoreCase))
+                        if (!(procVLC == null))
                         {
-                            File.WriteAllText(output, String.Empty);
-                            using (StreamWriter outputFile = new StreamWriter(output))
+                            // Playback paused!
+                            if (procVLC.MainWindowTitle == "VLC media player")
                             {
-                                outputFile.Write("Playback paused!");
-                                this.Dispatcher.Invoke(() =>
+                                File.WriteAllText(output, String.Empty);
+                                using (StreamWriter outputFile = new StreamWriter(output))
                                 {
-                                    song.Text = "Playback paused!";
-                                });
-                                written = true;
+                                    outputFile.Write("Playback paused!");
+                                    this.Dispatcher.Invoke(() =>
+                                    {
+                                        song.Text = "Playback paused!";
+                                    });
+                                    written = true;
+                                }
                             }
-                        }
 
-                        // Waiting for playback...
-                        if (string.Equals(proc.MainWindowTitle, "Advertisement", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            File.WriteAllText(output, String.Empty);
-                            using (StreamWriter outputFile = new StreamWriter(output))
+                            // Song playing!
+                            if (!written)
                             {
-                                outputFile.Write("Waiting for playback...");
-                                this.Dispatcher.Invoke(() =>
+                                if (procVLC.MainWindowTitle.EndsWith(" - VLC media player"))
                                 {
-                                    song.Text = "Waiting for playback...";
-                                });
-                                written = true;
-                            }
-                        }
-
-                        // Playback paused!
-                        if (string.Equals(proc.MainWindowTitle, "Spotify Free", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            File.WriteAllText(output, String.Empty);
-                            using (StreamWriter outputFile = new StreamWriter(output))
-                            {
-                                outputFile.Write("Playback paused!");
-
-                                this.Dispatcher.Invoke(() => {
-                                    song.Text = "Playback paused!";
-                                });
-
-                                written = true;
-                            }
-                        }
-
-                        // Song playing!
-                        if (!written)
-                        {
-                            File.WriteAllText(output, String.Empty);
-                            using (StreamWriter outputFile = new StreamWriter(output))
-                            {
-                                outputFile.WriteLine(Parse(0, proc.MainWindowTitle));
-                                this.Dispatcher.Invoke(() =>
-                                {
-                                    song.Text = Parse(0, proc.MainWindowTitle);
-                                });
+                                    File.WriteAllText(output, String.Empty);
+                                    using (StreamWriter outputFile = new StreamWriter(output))
+                                    {
+                                        outputFile.WriteLine(Parse(1, procVLC.MainWindowTitle));
+                                        this.Dispatcher.Invoke(() =>
+                                        {
+                                            song.Text = Parse(1, procVLC.MainWindowTitle);
+                                        });
+                                    }
+                                }
                             }
                         }
                         break;
@@ -192,16 +233,26 @@ namespace ObsSongDisplay
 
         private String Parse(int plattform, String s)
         {
-            switch (plattform) {
+            switch (plattform)
+            {
                 case 0: // Spotify
-                    String[] a = s.Split('-');
-                        
-                    String name = a[1];
-                    String author = a[0];
+                    String[] aSpotify = s.Split('-');
 
-                    String r = pattern.Replace("%author", author)
-                              .Replace("%name", name);
-                    return r;
+                    String nameSpotify = aSpotify[1];
+                    String authorSpotify = aSpotify[0];
+
+                    String rSpotify = pattern.Replace("%author", authorSpotify)
+                                             .Replace("%name", nameSpotify);
+                    return rSpotify;
+                case 1: // VLC media player
+                    String[] aVLC = s.Split('-');
+
+                    String nameVLC = aVLC[1].Replace("VLC media player", "");
+                    String authorVLC = aVLC[0].Replace("VLC media player", "");
+
+                    String rVLC = pattern.Replace("%author", authorVLC)
+                                         .Replace("%name", nameVLC);
+                    return rVLC;
             }
             return null;
         }
