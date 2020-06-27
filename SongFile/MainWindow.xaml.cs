@@ -254,7 +254,10 @@ namespace ObsSongDisplay
                     nameSpotify = nameSpotify.TrimStart(' ');
 
                     String rSpotify = pattern.Replace("%author", authorSpotify)
-                                             .Replace("%name", nameSpotify);
+                                             .Replace("%artist", authorSpotify)
+                                             .Replace("%name", nameSpotify)
+                                             .Replace("%song", nameSpotify)
+                                             .Replace("%software", "VLC Media Player");
                     return rSpotify;
                 case 1: // VLC media player
                     String[] aVLC = s.Split('-');
@@ -266,7 +269,11 @@ namespace ObsSongDisplay
                     nameVLC = nameVLC.TrimStart(' ');
 
                     String rVLC = pattern.Replace("%author", authorVLC)
-                                         .Replace("%name", nameVLC);
+                                         .Replace("%artist", authorVLC)
+                                         .Replace("%name", nameVLC)
+                                         .Replace("%song", nameVLC)
+                                         .Replace("%software", "VLC Media Player");
+
                     return rVLC;
             }
             return null;
