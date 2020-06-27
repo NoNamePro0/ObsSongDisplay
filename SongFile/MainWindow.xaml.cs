@@ -6,14 +6,13 @@ using MahApps.Metro.Controls;
 using System.Diagnostics;
 using System.IO;
 using System.Timers;
-using System.Text;
 
 namespace ObsSongDisplay
 {
     public partial class MainWindow : MetroWindow
     {
         String pattern = "%author - %name";
-        String interval = "10";
+        String interval = "20";
 
         String config = "config.txt";
         String output = "output.txt";
@@ -34,7 +33,7 @@ namespace ObsSongDisplay
         private void notifyIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             this.WindowState = WindowState.Normal;
-        }   
+        }
 
         private void Save_button_Click(object sender, RoutedEventArgs e)
         {
@@ -52,10 +51,12 @@ namespace ObsSongDisplay
         {
             if (!File.Exists(config))
             {
-                StringBuilder DefaultConfig = new StringBuilder();
-                DefaultConfig.Append("%author - %name");
-                DefaultConfig.Append("20");
-                File.WriteAllText(config, DefaultConfig.ToString());
+                File.WriteAllText(config, String.Empty);
+                using (StreamWriter outputFile = new StreamWriter(config))
+                {
+                    outputFile.WriteLine(pattern);
+                    outputFile.WriteLine(interval);
+                }
             }
 
             pattern = File.ReadAllLines(config)[0];
