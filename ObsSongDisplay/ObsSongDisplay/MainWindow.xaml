@@ -6,23 +6,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ObsSongDisplay"
         mc:Ignorable="d"
-        Title="ObsSongDisplay UI" Height="492.867" Width="327.617" ResizeMode="CanMinimize" Initialized="MetroWindow_Initialized" Closing="MetroWindow_Closing" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded">
-    <Grid>
-        <GroupBox x:Name="groupBox2" Header="MISC" HorizontalAlignment="Left" Height="117" Margin="12,337,0,0" VerticalAlignment="Top" Width="302"/>
+        Title="ObsSongDisplay" Height="300.867" Width="327.617" ResizeMode="CanMinimize" Initialized="MetroWindow_Initialized" Closing="MetroWindow_Closing" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded">
+    <Grid Height="272" VerticalAlignment="Top">
+        <GroupBox x:Name="groupBox2" Header="Now playing" HorizontalAlignment="Left" Height="63" Margin="10,189,0,0" VerticalAlignment="Top" Width="302">
+            <TextBlock x:Name="song" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Please wait.. Initialising.." VerticalAlignment="Top" Width="292" Height="26"/>
+        </GroupBox>
 
         <Label x:Name="label" Content="ObsSongDisplay V1.1" HorizontalAlignment="Left" Margin="10,1,0,0" VerticalAlignment="Top" Height="44" Width="302" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
-        <Label x:Name="label1" Content="by 0x0verflow.cf" HorizontalAlignment="Left" Height="27" Margin="10,37,0,0" VerticalAlignment="Top" Width="302" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF818181"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="66" Margin="21,103,0,0" TextWrapping="Wrap" Text="You'll find a &quot;osd.txt&quot; in the folder, the programm is running in. Go to OBS, create a text layer and choose this file as input. While this programm is running, the content of the file will be the playing song." VerticalAlignment="Top" Width="283"/>
-        <GroupBox x:Name="groupBox" Header="How to" HorizontalAlignment="Left" Height="110" Margin="12,69,0,0" VerticalAlignment="Top" Width="302"/>
-        <GroupBox x:Name="groupBox1" Header="Configuration" HorizontalAlignment="Left" Height="138" Margin="12,188,0,0" VerticalAlignment="Top" Width="302"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="76,224,0,0" TextWrapping="Wrap" Text="/*author*/ - /*name*/" VerticalAlignment="Top" Width="228"/>
-        <Label x:Name="label2" Content="Pattern:" HorizontalAlignment="Left" Margin="21,223,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="save_button" Content="Save configuration" HorizontalAlignment="Left" Margin="21,291,0,0" VerticalAlignment="Top" Width="283" Click="Save_button_Click"/>
-        <Label x:Name="link" Content="http://0x0verflow.cf/" HorizontalAlignment="Left" Margin="21,419,0,0" VerticalAlignment="Top" Width="118" Foreground="#FF000CFF" FontStyle="Italic" MouseDown="Link_MouseDown" RenderTransformOrigin="0.794,-0.603"/>
-        <TextBox x:Name="intervalBox" HorizontalAlignment="Left" Height="23" Margin="139,254,0,0" TextWrapping="Wrap" Text="5000" VerticalAlignment="Top" Width="165"/>
-        <Label x:Name="label2_Copy" Content="Check interval (ms):" HorizontalAlignment="Left" Margin="21,253,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button" Content="Donate (CS:GO Skins)" HorizontalAlignment="Left" Margin="144,418,0,0" VerticalAlignment="Top" Width="160" Click="Button_Click"/>
-        <CheckBox x:Name="checkBox" Content="Dark Mode" HorizontalAlignment="Left" Margin="25,373,0,0" VerticalAlignment="Top" Width="87" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Height="25"/>
+        <GroupBox x:Name="groupBox1" Header="Configuration" HorizontalAlignment="Left" Height="138" Margin="10,45,0,0" VerticalAlignment="Top" Width="302"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="76,82,0,0" TextWrapping="Wrap" Text="%author - %name" VerticalAlignment="Top" Width="228"/>
+        <Label x:Name="label2" Content="Pattern:" HorizontalAlignment="Left" Margin="21,80,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="save_button" Content="Save configuration" HorizontalAlignment="Left" Margin="21,148,0,0" VerticalAlignment="Top" Width="283" Click="Save_button_Click"/>
+        <TextBox x:Name="intervalBox" HorizontalAlignment="Left" Height="23" Margin="107,113,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.5,0.5"/>
+        <Label x:Name="label2_Copy" Content="Interval (Sec):" HorizontalAlignment="Left" Margin="21,113,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Controls:MetroWindow>

@@ -1,32 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MahApps.Metro.Controls;
-using System.Media;
 using System.Diagnostics;
 using System.IO;
-using MahApps.Metro;
+using System.Timers;
 
 namespace ObsSongDisplay
 {
-    /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        String pattern = "%author - %name";
+        String interval = "10";
+
+        String config = "config.txt";
+        String output = "output.txt";
 
         private System.Windows.Forms.NotifyIcon notifyIcon;
 
@@ -46,38 +35,30 @@ namespace ObsSongDisplay
             this.WindowState = WindowState.Normal;
         }
 
-        private void loadSettings()
-        {
-            textBox.Text = File.ReadAllLines("config.txt")[0];
-            intervalBox.Text = File.ReadAllLines("config.txt")[1];
-        }
-
         private void Save_button_Click(object sender, RoutedEventArgs e)
         {
-            interval = intervalBox.Text;
-            pattern = textBox.Text;
-
-            File.WriteAllText("config.txt", String.Empty);
-            using (StreamWriter outputFile = new StreamWriter("config.txt"))
+            File.WriteAllText(config, String.Empty);
+            using (StreamWriter outputFile = new StreamWriter(config))
             {
-                outputFile.WriteLine(pattern);
-                outputFile.WriteLine(interval);
-                outputFile.WriteLine("");
-                outputFile.WriteLine("");
-                outputFile.WriteLine("#########################");
-                outputFile.WriteLine("# Don't edit this file! #");
-                outputFile.WriteLine("#########################");
+                outputFile.WriteLine(textBox.Text);
+                outputFile.WriteLine(intervalBox.Text);
             }
+
+            Settings();
         }
 
-        private void Link_MouseDown(object sender, MouseButtonEventArgs e)
+        public void Settings()
         {
-            System.Diagnostics.Process.Start("http://0x0verflow.cf/");
+            pattern = File.ReadAllLines(config)[0];
+            interval = File.ReadAllLines(config)[1];
+
+            textBox.Text = pattern;
+            intervalBox.Text = interval;
         }
 
         private void MetroWindow_Initialized(object sender, EventArgs e)
         {
-            loadSettings();
+
         }
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -102,120 +83,133 @@ namespace ObsSongDisplay
             }
         }
 
-        String pattern = "/*author*/ - /*name*/";
-        String interval = "5000";
-
-        public void checkThread()
+        public void Timer()
         {
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    Thread.Sleep(int.Parse(interval));
-
-                    bool written = false;
-
-                    var proc = Process.GetProcessesByName("Spotify").FirstOrDefault(p => !string.IsNullOrWhiteSpace(p.MainWindowTitle));
-
-                    if (proc == null)
-                    {
-                        File.WriteAllText("osd.txt", String.Empty);
-                        using (StreamWriter outputFile = new StreamWriter("osd.txt"))
-                        {
-                            outputFile.Write("Nothing playing!");
-                            written = true;
-                        }
-                    }
-
-                    if (string.Equals(proc.MainWindowTitle, "Spotify", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        File.WriteAllText("osd.txt", String.Empty);
-                        using (StreamWriter outputFile = new StreamWriter("osd.txt"))
-                        {
-                            outputFile.Write("Playback paused!");
-                            written = true;
-                        }
-                    }
-
-                    if (string.Equals(proc.MainWindowTitle, "Advertisement", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        File.WriteAllText("osd.txt", String.Empty);
-                        using (StreamWriter outputFile = new StreamWriter("osd.txt"))
-                        {
-                            outputFile.Write("Waiting for playback...");
-                            written = true;
-                        }
-                    }
-
-                    if (string.Equals(proc.MainWindowTitle, "Spotify Free", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        File.WriteAllText("osd.txt", String.Empty);
-                        using (StreamWriter outputFile = new StreamWriter("osd.txt"))
-                        {
-                            outputFile.Write("Playback paused!");
-                            written = true;
-                        }
-                    }
-
-                    if (!written)
-                    {
-                        File.WriteAllText("osd.txt", String.Empty);
-                        using (StreamWriter outputFile = new StreamWriter("osd.txt"))
-                        {
-                            outputFile.WriteLine(parseSpotify(proc.MainWindowTitle));
-                        }
-                    }
-                }
-
-            });
-            
-            
+            System.Timers.Timer t = new System.Timers.Timer(TimeSpan.FromSeconds(int.Parse(interval)).TotalMilliseconds);
+            t.AutoReset = true;
+            t.Elapsed += new System.Timers.ElapsedEventHandler(Refresh);
+            t.Start();
         }
 
-        private String parseSpotify(String s)
+        public void Refresh(object sender, ElapsedEventArgs e)
         {
-            String[] a = s.Split('-');
+            bool written = false;
 
-            String name = a[1];
-            String author = a[0];
+            // Prionty
+            written = Get(0, written); // Spotify
+        }
 
-            String r = pattern.Replace("/*author*/", author).Replace("/*name*/", name);
+        private bool Get(int plattform, bool written)
+        {
+            if(!written)
+            {
+                switch(plattform)
+                {
+                    case 0: // Spotify
+                        var proc = Process.GetProcessesByName("Spotify").FirstOrDefault(p => !string.IsNullOrWhiteSpace(p.MainWindowTitle));
 
-            return r;
+                        // Not open
+                        if (proc == null)
+                        {
+                            File.WriteAllText(output, String.Empty);
+                            using (StreamWriter outputFile = new StreamWriter(output))
+                            {
+                                outputFile.Write("Nothing playing!");
+
+                                this.Dispatcher.Invoke(() =>
+                                {
+                                    song.Text = "Nothing playing!";
+                                });
+
+                                written = true;
+                            }
+                        }
+
+                        // Playback paused!
+                        if (string.Equals(proc.MainWindowTitle, "Spotify", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            File.WriteAllText(output, String.Empty);
+                            using (StreamWriter outputFile = new StreamWriter(output))
+                            {
+                                outputFile.Write("Playback paused!");
+                                this.Dispatcher.Invoke(() =>
+                                {
+                                    song.Text = "Playback paused!";
+                                });
+                                written = true;
+                            }
+                        }
+
+                        // Waiting for playback...
+                        if (string.Equals(proc.MainWindowTitle, "Advertisement", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            File.WriteAllText(output, String.Empty);
+                            using (StreamWriter outputFile = new StreamWriter(output))
+                            {
+                                outputFile.Write("Waiting for playback...");
+                                this.Dispatcher.Invoke(() =>
+                                {
+                                    song.Text = "Waiting for playback...";
+                                });
+                                written = true;
+                            }
+                        }
+
+                        // Playback paused!
+                        if (string.Equals(proc.MainWindowTitle, "Spotify Free", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            File.WriteAllText(output, String.Empty);
+                            using (StreamWriter outputFile = new StreamWriter(output))
+                            {
+                                outputFile.Write("Playback paused!");
+
+                                this.Dispatcher.Invoke(() => {
+                                    song.Text = "Playback paused!";
+                                });
+
+                                written = true;
+                            }
+                        }
+
+                        // Song playing!
+                        if (!written)
+                        {
+                            File.WriteAllText(output, String.Empty);
+                            using (StreamWriter outputFile = new StreamWriter(output))
+                            {
+                                outputFile.WriteLine(Parse(0, proc.MainWindowTitle));
+                                this.Dispatcher.Invoke(() =>
+                                {
+                                    song.Text = Parse(0, proc.MainWindowTitle);
+                                });
+                            }
+                        }
+                        break;
+                }
+            }
+            return written;
+        }
+
+        private String Parse(int plattform, String s)
+        {
+            switch (plattform) {
+                case 0: // Spotify
+                    String[] a = s.Split('-');
+                        
+                    String name = a[1];
+                    String author = a[0];
+
+                    String r = pattern.Replace("%author", author)
+                              .Replace("%name", name);
+                    return r;
+            }
+            return null;
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            checkThread();
-        }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            if (checkBox.IsChecked == true)
-            {
-                ThemeManager.ChangeAppStyle(this,
-                                    ThemeManager.GetAccent("Olive"),
-                                    ThemeManager.GetAppTheme("BaseDark"));
-            }
-            else
-            {
-                ThemeManager.ChangeAppStyle(this,
-                                    ThemeManager.GetAccent("Blue"),
-                                    ThemeManager.GetAppTheme("BaseLight"));
-            }
-            
-        }
-
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            ThemeManager.ChangeAppStyle(this,
-                                    ThemeManager.GetAccent("Blue"),
-                                    ThemeManager.GetAppTheme("BaseLight"));
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://steamcommunity.com/tradeoffer/new/?partner=255140219&token=DF94BUQs");
+            Settings();
+            Timer();
         }
     }
 }
