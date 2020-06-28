@@ -17,6 +17,9 @@ namespace ObsSongDisplay
         String config = "config.txt";
         String output = "output.txt";
 
+        String VersionName = "SongFile V1.0 Preview 2";
+        String VersionTag = "1.0-pre2";
+
         private System.Windows.Forms.NotifyIcon notifyIcon;
 
         public MainWindow()
@@ -28,6 +31,8 @@ namespace ObsSongDisplay
             notifyIcon.MouseDoubleClick +=
                 new System.Windows.Forms.MouseEventHandler
                     (notifyIcon_MouseDoubleClick);
+
+            Header.Content = VersionName;
         }
 
         private void notifyIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -290,6 +295,11 @@ namespace ObsSongDisplay
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             Refresh();    
+        }
+
+        private void Link_MouseDown(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(String.Format("https://github.com/NoNamePro0/SongFile/blob/{0}/README.md", VersionTag));
         }
     }
 }

@@ -17,7 +17,7 @@
             <TextBlock x:Name="song" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Please wait.. Initialising.." VerticalAlignment="Top" Width="292" Height="26"/>
         </GroupBox>
 
-        <Label x:Name="label" Content="SongFile V1.0 Preview 2" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Height="44" Width="302" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.ColumnSpan="3"/>
+        <Label x:Name="Header" Content="Please wait.. Initialising.." HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Height="44" Width="302" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.ColumnSpan="3"/>
         <GroupBox x:Name="groupBox1" Header="Configuration" HorizontalAlignment="Left" Height="138" Margin="12,117,0,0" VerticalAlignment="Top" Width="302" Grid.ColumnSpan="3"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="23,154,0,0" TextWrapping="Wrap" Text="%author - %name" VerticalAlignment="Top" Width="228" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Label x:Name="label2" Content="Pattern:" HorizontalAlignment="Left" Margin="23,152,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
@@ -25,6 +25,6 @@
         <TextBox x:Name="intervalBox" HorizontalAlignment="Left" Height="23" Margin="29,185,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.5,0.5" Grid.Column="2"/>
         <Label x:Name="label2_Copy" Content="Interval (Sec):" HorizontalAlignment="Left" Margin="23,185,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
         <Button x:Name="btnRefresh" Content="Refresh" Grid.Column="2" HorizontalAlignment="Left" Margin="157,262,0,0" VerticalAlignment="Top" Width="75" Click="btnRefresh_Click"/>
-
+        <Label x:Name="link" Content="How to?" HorizontalAlignment="Left" Margin="12,262,0,0" VerticalAlignment="Top" Width="58" Foreground="#FF0366D6" FontStyle="Italic" MouseDown="Link_MouseDown" RenderTransformOrigin="0.794,-0.603" Grid.ColumnSpan="2"/>
     </Grid>
 </Controls:MetroWindow>
