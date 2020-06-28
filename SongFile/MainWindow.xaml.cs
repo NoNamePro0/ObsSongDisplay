@@ -263,7 +263,7 @@ namespace ObsSongDisplay
                                              .Replace("%artist", authorSpotify)
                                              .Replace("%name", nameSpotify)
                                              .Replace("%song", nameSpotify)
-                                             .Replace("%software", "VLC Media Player");
+                                             .Replace("%software", "Spotify");
                     return rSpotify;
                 case 1: // VLC media player
                     String[] aVLC = s.Split('-');
