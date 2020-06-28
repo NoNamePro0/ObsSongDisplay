@@ -236,6 +236,7 @@ namespace ObsSongDisplay
                                         {
                                             song.Text = Parse(1, procVLC.MainWindowTitle);
                                         });
+                                        written = true;
                                     }
                                 }
                             }
