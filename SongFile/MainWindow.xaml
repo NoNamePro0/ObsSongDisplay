@@ -6,25 +6,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ObsSongDisplay"
         mc:Ignorable="d"
-        Title="SongFile" Height="321.867" Width="327.617" ResizeMode="CanMinimize" Initialized="MetroWindow_Initialized" Closing="MetroWindow_Closing" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded">
+        Title="SongFile" Height="332.867" Width="327.617" ResizeMode="CanMinimize" Initialized="MetroWindow_Initialized" Closing="MetroWindow_Closing" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded">
     <Grid Margin="0,0,0,5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="55*"/>
             <ColumnDefinition Width="25*"/>
             <ColumnDefinition Width="242*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox x:Name="groupBox2" Header="Now playing" HorizontalAlignment="Left" Height="63" Margin="10,189,0,0" VerticalAlignment="Top" Width="302" Grid.ColumnSpan="3">
+        <GroupBox x:Name="groupBox2" Header="Now playing" HorizontalAlignment="Left" Height="63" Margin="11,47,0,0" VerticalAlignment="Top" Width="302" Grid.ColumnSpan="3">
             <TextBlock x:Name="song" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Please wait.. Initialising.." VerticalAlignment="Top" Width="292" Height="26"/>
         </GroupBox>
 
-        <Label x:Name="label" Content="SongFile V1.0 Preview 2" HorizontalAlignment="Left" Margin="10,1,0,0" VerticalAlignment="Top" Height="44" Width="302" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.ColumnSpan="3"/>
-        <GroupBox x:Name="groupBox1" Header="Configuration" HorizontalAlignment="Left" Height="138" Margin="10,45,0,0" VerticalAlignment="Top" Width="302" Grid.ColumnSpan="3"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="21,82,0,0" TextWrapping="Wrap" Text="%author - %name" VerticalAlignment="Top" Width="228" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Label x:Name="label2" Content="Pattern:" HorizontalAlignment="Left" Margin="21,80,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Button x:Name="save_button" Content="Save configuration" HorizontalAlignment="Left" Margin="21,148,0,0" VerticalAlignment="Top" Width="283" Click="Save_button_Click" Grid.ColumnSpan="3"/>
-        <TextBox x:Name="intervalBox" HorizontalAlignment="Left" Height="23" Margin="26.932,113,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.5,0.5" Grid.Column="2"/>
-        <Label x:Name="label2_Copy" Content="Interval (Sec):" HorizontalAlignment="Left" Margin="21,113,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
-        <Button x:Name="btnRefresh" Content="Refresh" Grid.Column="2" HorizontalAlignment="Left" Margin="157,257,0,0" VerticalAlignment="Top" Width="75" Click="btnRefresh_Click"/>
+        <Label x:Name="label" Content="SongFile V1.0 Preview 2" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Height="44" Width="302" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.ColumnSpan="3"/>
+        <GroupBox x:Name="groupBox1" Header="Configuration" HorizontalAlignment="Left" Height="138" Margin="12,117,0,0" VerticalAlignment="Top" Width="302" Grid.ColumnSpan="3"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="23,154,0,0" TextWrapping="Wrap" Text="%author - %name" VerticalAlignment="Top" Width="228" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Label x:Name="label2" Content="Pattern:" HorizontalAlignment="Left" Margin="23,152,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Button x:Name="save_button" Content="Save configuration" HorizontalAlignment="Left" Margin="23,220,0,0" VerticalAlignment="Top" Width="283" Click="Save_button_Click" Grid.ColumnSpan="3"/>
+        <TextBox x:Name="intervalBox" HorizontalAlignment="Left" Height="23" Margin="29,185,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.5,0.5" Grid.Column="2"/>
+        <Label x:Name="label2_Copy" Content="Interval (Sec):" HorizontalAlignment="Left" Margin="23,185,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+        <Button x:Name="btnRefresh" Content="Refresh" Grid.Column="2" HorizontalAlignment="Left" Margin="157,262,0,0" VerticalAlignment="Top" Width="75" Click="btnRefresh_Click"/>
 
     </Grid>
 </Controls:MetroWindow>
