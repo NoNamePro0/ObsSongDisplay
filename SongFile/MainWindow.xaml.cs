@@ -269,8 +269,8 @@ namespace ObsSongDisplay
                 case 1: // VLC media player
                     String[] aVLC = s.Split('-');
 
-                    String nameVLC = aVLC[1].Replace("VLC media player", "");
-                    String authorVLC = aVLC[0].Replace("VLC media player", "");
+                    String nameVLC = aVLC[1].Replace(" VLC media player", "");
+                    String authorVLC = aVLC[0].Replace(" VLC media player", "");
 
                     authorVLC = authorVLC.TrimEnd(' ');
                     nameVLC = nameVLC.TrimStart(' ');
