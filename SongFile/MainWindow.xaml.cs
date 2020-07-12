@@ -156,6 +156,7 @@ namespace ObsSongDisplay
                                     {
                                         song.Text = "Playback paused!";
                                     });
+                                    DiscordRefresh("Playback paused!");
                                     written = true;
                                 }
                             }
@@ -171,6 +172,7 @@ namespace ObsSongDisplay
                                     {
                                         song.Text = "Waiting for playback...";
                                     });
+                                    DiscordRefresh("Waiting for playback...");
                                     written = true;
                                 }
                             }
@@ -188,6 +190,8 @@ namespace ObsSongDisplay
                                         song.Text = "Playback paused!";
                                     });
 
+                                    DiscordRefresh("Playback paused!");
+
                                     written = true;
                                 }
                             }
@@ -203,6 +207,7 @@ namespace ObsSongDisplay
                                     {
                                         song.Text = Parse(0, procSpotify.MainWindowTitle);
                                     });
+                                    DiscordRefresh(Parse(0, procSpotify.MainWindowTitle));
                                 }
                                 written = true;
                             }
@@ -224,6 +229,7 @@ namespace ObsSongDisplay
                                     {
                                         song.Text = "Playback paused!";
                                     });
+                                    DiscordRefresh("Playback paused!");
                                     written = true;
                                 }
                             }
@@ -241,6 +247,7 @@ namespace ObsSongDisplay
                                         {
                                             song.Text = Parse(1, procVLC.MainWindowTitle);
                                         });
+                                        DiscordRefresh(Parse(1, procVLC.MainWindowTitle));
                                         written = true;
                                     }
                                 }
@@ -322,6 +329,19 @@ namespace ObsSongDisplay
             discord.SetPresence(new RichPresence()
             {
                 Details = "Please wait.. Initialising..",
+                Assets = new Assets()
+                {
+                    LargeImageKey = "image_large",
+                    SmallImageKey = "image_small"
+                }
+            });
+        }
+
+        public void DiscordRefresh(string details)
+        {
+            discord.SetPresence(new RichPresence()
+            {
+                Details = details,
                 Assets = new Assets()
                 {
                     LargeImageKey = "image_large",
