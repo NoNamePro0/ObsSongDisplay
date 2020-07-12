@@ -16,11 +16,11 @@ namespace ObsSongDisplay
         String pattern = "%author - %name";
         String interval = "20";
 
-        String config = "config.txt";
-        String output = "output.txt";
+        readonly String config = "config.txt";
+        readonly String output = "output.txt";
 
-        String VersionName = "SongFile V1.0 Preview 2";
-        String VersionTag = "1.0-pre2";
+        readonly String VersionName = "SongFile V1.0";
+        readonly String VersionTag = "1.0";
 
         private System.Windows.Forms.NotifyIcon notifyIcon;
         public DiscordRpcClient discord;
@@ -119,7 +119,7 @@ namespace ObsSongDisplay
             written = Get(0, written); // Spotify
             written = Get(1, written); // VLC
 
-            
+
             this.Dispatcher.Invoke(() =>
             {
                 if (!written)
@@ -148,67 +148,28 @@ namespace ObsSongDisplay
                             // Playback paused!
                             if (string.Equals(procSpotify.MainWindowTitle, "Spotify", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                File.WriteAllText(output, String.Empty);
-                                using (StreamWriter outputFile = new StreamWriter(output))
-                                {
-                                    outputFile.Write("Playback paused!");
-                                    this.Dispatcher.Invoke(() =>
-                                    {
-                                        song.Text = "Playback paused!";
-                                    });
-                                    DiscordRefresh("Playback paused!");
-                                    written = true;
-                                }
+                                Set("Playback paused!");
+                                written = true;
                             }
 
                             // Waiting for playback...
                             if (string.Equals(procSpotify.MainWindowTitle, "Advertisement", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                File.WriteAllText(output, String.Empty);
-                                using (StreamWriter outputFile = new StreamWriter(output))
-                                {
-                                    outputFile.Write("Waiting for playback...");
-                                    this.Dispatcher.Invoke(() =>
-                                    {
-                                        song.Text = "Waiting for playback...";
-                                    });
-                                    DiscordRefresh("Waiting for playback...");
-                                    written = true;
-                                }
+                                Set("Waiting for playback...");
+                                written = true;
                             }
 
                             // Playback paused!
                             if (string.Equals(procSpotify.MainWindowTitle, "Spotify Free", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                File.WriteAllText(output, String.Empty);
-                                using (StreamWriter outputFile = new StreamWriter(output))
-                                {
-                                    outputFile.Write("Playback paused!");
-
-                                    this.Dispatcher.Invoke(() =>
-                                    {
-                                        song.Text = "Playback paused!";
-                                    });
-
-                                    DiscordRefresh("Playback paused!");
-
-                                    written = true;
-                                }
+                                Set("Playback paused!");
+                                written = true;
                             }
 
                             // Song playing!
                             if (!written)
                             {
-                                File.WriteAllText(output, String.Empty);
-                                using (StreamWriter outputFile = new StreamWriter(output))
-                                {
-                                    outputFile.WriteLine(Parse(0, procSpotify.MainWindowTitle));
-                                    this.Dispatcher.Invoke(() =>
-                                    {
-                                        song.Text = Parse(0, procSpotify.MainWindowTitle);
-                                    });
-                                    DiscordRefresh(Parse(0, procSpotify.MainWindowTitle));
-                                }
+                                Set(Parse(0, procSpotify.MainWindowTitle));
                                 written = true;
                             }
                         }
@@ -221,17 +182,8 @@ namespace ObsSongDisplay
                             // Playback paused!
                             if (procVLC.MainWindowTitle == "VLC media player")
                             {
-                                File.WriteAllText(output, String.Empty);
-                                using (StreamWriter outputFile = new StreamWriter(output))
-                                {
-                                    outputFile.Write("Playback paused!");
-                                    this.Dispatcher.Invoke(() =>
-                                    {
-                                        song.Text = "Playback paused!";
-                                    });
-                                    DiscordRefresh("Playback paused!");
-                                    written = true;
-                                }
+                                Set("Playback paused!");
+                                written = true;
                             }
 
                             // Song playing!
@@ -239,17 +191,8 @@ namespace ObsSongDisplay
                             {
                                 if (procVLC.MainWindowTitle.EndsWith(" - VLC media player"))
                                 {
-                                    File.WriteAllText(output, String.Empty);
-                                    using (StreamWriter outputFile = new StreamWriter(output))
-                                    {
-                                        outputFile.WriteLine(Parse(1, procVLC.MainWindowTitle));
-                                        this.Dispatcher.Invoke(() =>
-                                        {
-                                            song.Text = Parse(1, procVLC.MainWindowTitle);
-                                        });
-                                        DiscordRefresh(Parse(1, procVLC.MainWindowTitle));
-                                        written = true;
-                                    }
+                                    Set(Parse(1, procVLC.MainWindowTitle));
+                                    written = true;
                                 }
                             }
                         }
@@ -257,6 +200,26 @@ namespace ObsSongDisplay
                 }
             }
             return written;
+        }
+
+        private void Set(String input)
+        {
+            // File
+            File.WriteAllText(output, String.Empty);
+            using (StreamWriter outputFile = new StreamWriter(output))
+            {
+                outputFile.WriteLine(input);
+            }
+
+            // UI
+            this.Dispatcher.Invoke(() =>
+            {
+                song.Text = input;
+            });
+
+            // Discord Rich Presence
+            DiscordRefresh(input);
+
         }
 
         private String Parse(int plattform, String s)
@@ -307,7 +270,7 @@ namespace ObsSongDisplay
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            Refresh();    
+            Refresh();
         }
 
         private void Link_MouseDown(object sender, RoutedEventArgs e)
