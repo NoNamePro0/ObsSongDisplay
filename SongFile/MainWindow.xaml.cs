@@ -19,6 +19,10 @@ namespace ObsSongDisplay
         readonly String config = "config.txt";
         readonly String output = "output.txt";
 
+        readonly String messagePaused = "Playback paused!";
+        readonly String messageAdvert = "Waiting for playback";
+        readonly String messageNothing = "Nothing playing";
+
         readonly String VersionName = "SongFile V1.0";
         readonly String VersionTag = "1.0";
 
@@ -120,18 +124,10 @@ namespace ObsSongDisplay
             written = Get(1, written); // VLC
 
 
-            this.Dispatcher.Invoke(() =>
+            if (!written)
             {
-                if (!written)
-                {
-                    File.WriteAllText(output, String.Empty);
-                    using (StreamWriter outputFile = new StreamWriter(output))
-                    {
-                        outputFile.WriteLine("Nothing playing");
-                        song.Text = "Nothing playing";
-                    }
-                }
-            });
+                Set(messageNothing);
+            }
         }
 
         private bool Get(int plattform, bool written)
@@ -148,21 +144,21 @@ namespace ObsSongDisplay
                             // Playback paused!
                             if (string.Equals(procSpotify.MainWindowTitle, "Spotify", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                Set("Playback paused!");
+                                Set(messagePaused);
                                 written = true;
                             }
 
                             // Waiting for playback...
                             if (string.Equals(procSpotify.MainWindowTitle, "Advertisement", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                Set("Waiting for playback...");
+                                Set(messageAdvert);
                                 written = true;
                             }
 
                             // Playback paused!
                             if (string.Equals(procSpotify.MainWindowTitle, "Spotify Free", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                Set("Playback paused!");
+                                Set(messagePaused);
                                 written = true;
                             }
 
@@ -182,7 +178,7 @@ namespace ObsSongDisplay
                             // Playback paused!
                             if (procVLC.MainWindowTitle == "VLC media player")
                             {
-                                Set("Playback paused!");
+                                Set(messagePaused);
                                 written = true;
                             }
 
