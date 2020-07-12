@@ -6,6 +6,8 @@ using MahApps.Metro.Controls;
 using System.Diagnostics;
 using System.IO;
 using System.Timers;
+using DiscordRPC;
+using DiscordRPC.Logging;
 
 namespace ObsSongDisplay
 {
@@ -21,6 +23,7 @@ namespace ObsSongDisplay
         String VersionTag = "1.0-pre2";
 
         private System.Windows.Forms.NotifyIcon notifyIcon;
+        public DiscordRpcClient discord;
 
         public MainWindow()
         {
@@ -33,6 +36,8 @@ namespace ObsSongDisplay
                     (notifyIcon_MouseDoubleClick);
 
             Header.Content = VersionName;
+
+            DiscordLoad();
         }
 
         private void notifyIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -301,6 +306,28 @@ namespace ObsSongDisplay
         private void Link_MouseDown(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(String.Format("https://github.com/NoNamePro0/SongFile/blob/{0}/README.md", VersionTag));
+        }
+
+        public void DiscordLoad()
+        {
+            discord = new DiscordRpcClient("731868151402463242");
+
+            discord.Logger = new ConsoleLogger() { Level = LogLevel.Warning };
+
+            discord.OnReady += (sender, e) => { };
+            discord.OnPresenceUpdate += (sender, e) => { };
+
+            discord.Initialize();
+
+            discord.SetPresence(new RichPresence()
+            {
+                Details = "Please wait.. Initialising..",
+                Assets = new Assets()
+                {
+                    LargeImageKey = "image_large",
+                    SmallImageKey = "image_small"
+                }
+            });
         }
     }
 }
