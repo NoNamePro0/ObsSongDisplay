@@ -8,6 +8,7 @@ using System.IO;
 using System.Timers;
 using DiscordRPC;
 using DiscordRPC.Logging;
+using System.Windows.Forms;
 
 namespace ObsSongDisplay
 {
@@ -19,9 +20,9 @@ namespace ObsSongDisplay
         readonly String config = "config.txt";
         readonly String output = "output.txt";
 
-        readonly String messagePaused = "Playback paused!";
-        readonly String messageAdvert = "Waiting for playback";
-        readonly String messageNothing = "Nothing playing";
+        const String messagePaused = "Playback paused!";
+        const String messageAdvert = "Waiting for playback";
+        const String messageNothing = "Nothing playing";
 
         readonly String VersionName = "SongFile V1.0";
         readonly String VersionTag = "1.0";
@@ -298,6 +299,13 @@ namespace ObsSongDisplay
 
         public void DiscordRefresh(string details)
         {
+            switch (details)
+            {
+                case messageAdvert:  discord.ClearPresence(); return;
+                case messagePaused:  discord.ClearPresence(); return;
+                case messageNothing: discord.ClearPresence(); return;
+            }
+
             discord.SetPresence(new RichPresence()
             {
                 Details = details,
