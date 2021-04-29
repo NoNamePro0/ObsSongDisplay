@@ -1,0 +1,18 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - NoNamePro0
+  ignore:
+  - dependency-name: MahApps.Metro
+    versions:
+    - 2.4.3
+    - 2.4.4
+  - dependency-name: ControlzEx
+    versions:
+    - 4.4.0
